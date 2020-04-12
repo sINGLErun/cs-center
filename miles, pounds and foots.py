@@ -1,4 +1,6 @@
-d = {
+MAX_NUM_LEN = 3
+
+d = {   # числительное     # цифра
         'сто':             100,
         'двести':          200,
         'триста':          300,
@@ -35,24 +37,38 @@ d = {
         'семь':            7,
         'восемь':          8,
         'девять':          9
-    }
+    }   # основной словарь соответствий между числительными и цифрами
 
-miles = ['миля', 'мили', 'миль']
-#kilometers = ['километр',]
+
+miles = ['миля', 'мили', 'миль']            # список склонений слова миля
+kilometers = ['километр', 'километра', 'километров']
 s = '- Нет, Джон, у вас нет даже лошади для этого путешествия в двести пятьдесят миль.'
+# входная строка, дальше её стоит заменить на input()
 
-ss = s.split(' ')
-print(ss)
+s_ = [[s.find(m), m] for m in miles]        # нашли первый индекс вхождения склонения мили
+s_.sort(key=lambda x: x[0], reverse=True)   # упорядочили массив
+p = s_[0][0]                                # достали индекс первого вхождения
 
-#  s1 = [[ss.index(m), m] if m in ss else [-1, m] for m in miles]
-#  ТАК НЕ ПОЛУЧИТСЯ, ПОТОМУ ЧТО К СЛОВУ МИЛЯ МОЖЕТ БЫТЬ ПРИЛЕПЛЕНА '.'
+s1 = s[:p-1]                                # строка до слова из miles и убран пробел
+s2 = s1.split(' ')
 
-s1 = [[s.find(m), m] for m in miles]
-s1.sort(key=lambda x: x[0], reverse=True)
-p = s1[0][0]
+k = -1                                      # цикл перевода слов в суммарное число
+word = s2[k]
+miles_number = 0
+while word in list(d.keys()):
+    miles_number += d[word]
+    k -= 1
+    word = s2[k]
 
-s_ = s[:p]
+kilometers_number = int(round(miles_number*1.61, 0))
 
+s_num = ' '
+for i in range(MAX_NUM_LEN):
+    digit_i = int(str(kilometers_number)[i])
+    if digit_i != 0:
+        number_of_digit_i = [list(d.items())[j][1] for j in range(len(d))].index(digit_i * 10 ** (MAX_NUM_LEN - 1 - i))
+        s_num += list(d.items())[number_of_digit_i][0] + ' '
+# хорошо, конечно, но у меня склонения числительных не соотносятся нормально
 
-
-print()
+s3 = ' '.join(s2[:k+1]) + s_num
+print(s3)

@@ -1,7 +1,5 @@
 from num2words import num2words
 
-MAX_NUM_LEN = 3
-
 d = {   # числительное     # цифра
         'сто':             100,
         'двести':          200,
@@ -65,7 +63,7 @@ while word in list(d.keys()):
 
 kilometers_number = int(round(miles_number*1.61, 0))
 
-s3 = ' '.join(s2[:k+1]) + ' ' + num2words(kilometers_number, lang = 'ru') + ' '
+s1 = ' '.join(s2[:k+1]) + ' ' + num2words(kilometers_number, lang = 'ru') + ' '
 
 if kilometers_number % 10 == 1:
     kilometers_word = kilometers[0]
@@ -75,5 +73,7 @@ elif 5 <= kilometers_number % 10 or kilometers_number % 10 == 0:
     kilometers_word = kilometers[2]
 
 # надо прилепить конец предложения
-s3 = s3 + kilometers_word
-print(s3)
+s1 = s1 + kilometers_word + s[p + len(s_[0][1]):]
+# ЕБАТЬ, ДА!
+
+print(s1)

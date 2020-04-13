@@ -1,3 +1,5 @@
+from num2words import num2words
+
 MAX_NUM_LEN = 3
 
 d = {   # числительное     # цифра
@@ -42,7 +44,8 @@ d = {   # числительное     # цифра
 
 miles = ['миля', 'мили', 'миль']            # список склонений слова миля
 kilometers = ['километр', 'километра', 'километров']
-s = '- Нет, Джон, у вас нет даже лошади для этого путешествия в двести пятьдесят миль.'
+#s = '- Нет, Джон, у вас нет даже лошади для этого путешествия в восемнадцать миль.'
+s = input()
 # входная строка, дальше её стоит заменить на input()
 
 s_ = [[s.find(m), m] for m in miles]        # нашли первый индекс вхождения склонения мили
@@ -62,13 +65,15 @@ while word in list(d.keys()):
 
 kilometers_number = int(round(miles_number*1.61, 0))
 
-s_num = ' '
-for i in range(MAX_NUM_LEN):
-    digit_i = int(str(kilometers_number)[i])
-    if digit_i != 0:
-        number_of_digit_i = [list(d.items())[j][1] for j in range(len(d))].index(digit_i * 10 ** (MAX_NUM_LEN - 1 - i))
-        s_num += list(d.items())[number_of_digit_i][0] + ' '
-# хорошо, конечно, но у меня склонения числительных не соотносятся нормально
+s3 = ' '.join(s2[:k+1]) + ' ' + num2words(kilometers_number, lang = 'ru') + ' '
 
-s3 = ' '.join(s2[:k+1]) + s_num
+if kilometers_number % 10 == 1:
+    kilometers_word = kilometers[0]
+elif 2 <= kilometers_number % 10 < 5:
+    kilometers_word = kilometers[1]
+elif 5 <= kilometers_number % 10 or kilometers_number % 10 == 0:
+    kilometers_word = kilometers[2]
+
+# надо прилепить конец предложения
+s3 = s3 + kilometers_word
 print(s3)

@@ -42,8 +42,8 @@ d = {   # числительное     # цифра
 
 miles = ['миля', 'мили', 'миль']            # список склонений слова миля
 kilometers = ['километр', 'километра', 'километров']
-#s = '- Нет, Джон, у вас нет даже лошади для этого путешествия в восемнадцать миль.'
-s = input()
+s = '- Нет, Джон, у вас нет даже лошади для этого путешествия в девятьсот миль. Это будет очень опасно!'
+#s = input()
 # входная строка, дальше её стоит заменить на input()
 
 s_ = [[s.find(m), m] for m in miles]        # нашли первый индекс вхождения склонения мили
@@ -63,7 +63,13 @@ while word in list(d.keys()):
 
 kilometers_number = int(round(miles_number*1.61, 0))
 
-s1 = ' '.join(s2[:k+1]) + ' ' + num2words(kilometers_number, lang = 'ru') + ' '
+# чтобы не писать странное "одна" для тысяч
+if kilometers_number // 1000 == 1:
+    numerical = ' '.join(num2words(kilometers_number, lang = 'ru').split(' ')[1:]) + ' '
+else:
+    numerical = num2words(kilometers_number, lang = 'ru') + ' '
+
+s1 = ' '.join(s2[:k+1]) + ' ' + numerical
 
 if kilometers_number % 10 == 1:
     kilometers_word = kilometers[0]
@@ -75,5 +81,3 @@ elif 5 <= kilometers_number % 10 or kilometers_number % 10 == 0:
 # надо прилепить конец предложения
 s1 = s1 + kilometers_word + s[p + len(s_[0][1]):]
 # ЕБАТЬ, ДА!
-
-print(s1)

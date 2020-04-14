@@ -1,6 +1,6 @@
 from num2words import num2words
 
-d = {   # числительное     # цифра
+d = {
         'сто':             100,
         'двести':          200,
         'триста':          300,
@@ -37,23 +37,23 @@ d = {   # числительное     # цифра
         'семь':            7,
         'восемь':          8,
         'девять':          9
-    }   # основной словарь соответствий между числительными и цифрами
+    }
 
-
-miles = ['миля', 'мили', 'миль']            # список склонений слова миля
+miles = ['миля', 'мили', 'миль']
 kilometers = ['километр', 'километра', 'километров']
-s = '- Нет, Джон, у вас нет даже лошади для этого путешествия в девятьсот миль. Это будет очень опасно!'
-#s = input()
+s = '''- Нет, Джон, у вас нет даже лошади для этого путешествия
+ в девятьсот миль. Это будет очень опасно!'''
+# s = input()
 # входная строка, дальше её стоит заменить на input()
 
-s_ = [[s.find(m), m] for m in miles]        # нашли первый индекс вхождения склонения мили
-s_.sort(key=lambda x: x[0], reverse=True)   # упорядочили массив
-p = s_[0][0]                                # достали индекс первого вхождения
+s_ = [[s.find(m), m] for m in miles]
+s_.sort(key=lambda x: x[0], reverse=True)
+p = s_[0][0]
 
-s1 = s[:p-1]                                # строка до слова из miles и убран пробел
+s1 = s[:p-1]
 s2 = s1.split(' ')
 
-k = -1                                      # цикл перевода слов в суммарное число
+k = -1
 word = s2[k]
 miles_number = 0
 while word in list(d.keys()):
@@ -65,9 +65,9 @@ kilometers_number = int(round(miles_number*1.61, 0))
 
 # чтобы не писать странное "одна" для тысяч
 if kilometers_number // 1000 == 1:
-    numerical = ' '.join(num2words(kilometers_number, lang = 'ru').split(' ')[1:]) + ' '
+    numerical = ' '.join(num2words(kilometers_number, lang='ru').split(' ')[1:]) + ' '
 else:
-    numerical = num2words(kilometers_number, lang = 'ru') + ' '
+    numerical = num2words(kilometers_number, lang='ru') + ' '
 
 s1 = ' '.join(s2[:k+1]) + ' ' + numerical
 
@@ -78,6 +78,6 @@ elif 2 <= kilometers_number % 10 < 5:
 elif 5 <= kilometers_number % 10 or kilometers_number % 10 == 0:
     kilometers_word = kilometers[2]
 
-# надо прилепить конец предложения
 s1 = s1 + kilometers_word + s[p + len(s_[0][1]):]
+print(s1)
 # ЕБАТЬ, ДА!
